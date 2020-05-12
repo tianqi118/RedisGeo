@@ -2,6 +2,9 @@ package com.example.mapper;
 
 import com.example.entity.MerchantInfo;
 import com.example.entity.MerchantInfoKey;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * Created by Mybatis Generator
@@ -21,4 +24,7 @@ public interface MerchantInfoMapper {
     int updateByPrimaryKeySelective(MerchantInfo record);
 
     int updateByPrimaryKey(MerchantInfo record);
+
+    List<MerchantInfo> selectMerchantList();
+
 }

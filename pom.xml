@@ -60,7 +60,11 @@
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
 			<version>1.2.12</version>
 		</dependency>
-
+		<!--常用工具类 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<!-- 注解方式使用日志 ide需要安装lombok插件-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

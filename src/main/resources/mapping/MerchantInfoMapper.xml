@@ -291,4 +291,11 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectMerchantList" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List"/>
+    from merchant_info
+  </select>
+
 </mapper>
