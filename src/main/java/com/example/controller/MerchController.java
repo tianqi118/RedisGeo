@@ -26,5 +26,12 @@ public class MerchController {
         return "success-" + id + "-" + new Date();
     }
 
+    @RequestMapping("getGeo/{id}")
+    public String getGeo(@PathVariable int id) {
+        merchantGeoService.getDefaultGeoSorted();
+        return "success-" + id + "-" + new Date();
+    }
+
+
 
 }
