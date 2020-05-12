@@ -57,7 +57,7 @@
         </javaClientGenerator>
 
         <!-- tableName:数据库表名；domainObjectName:对应于数据库表的javaBean类名 -->
-        <table tableName="time_zone_table" domainObjectName="TimeZoneTable" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="merchant_info" domainObjectName="MerchantInfo" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
             <!-- domainName去掉前缀-->
          <!--   <domainObjectRenamingRule searchString="^Via" replaceString=""/>-->

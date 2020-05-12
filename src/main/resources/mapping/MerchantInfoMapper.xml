@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MerchantInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.entity.MerchantInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="merchant_id" jdbcType="VARCHAR" property="merchantId" />
+    <result column="merchant_name" jdbcType="VARCHAR" property="merchantName" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="sub_category" jdbcType="VARCHAR" property="subCategory" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="street" jdbcType="VARCHAR" property="street" />
+    <result column="biz_area_id" jdbcType="VARCHAR" property="bizAreaId" />
+    <result column="biz_area_name" jdbcType="VARCHAR" property="bizAreaName" />
+    <result column="merchant_tel" jdbcType="VARCHAR" property="merchantTel" />
+    <result column="biz_hours" jdbcType="VARCHAR" property="bizHours" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="merchant_pic" jdbcType="VARCHAR" property="merchantPic" />
+    <result column="merch_sts" jdbcType="VARCHAR" property="merchSts" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="modified_date" jdbcType="TIMESTAMP" property="modifiedDate" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, merchant_id, merchant_name, country, category, sub_category, city, district, 
+    street, biz_area_id, biz_area_name, merchant_tel, biz_hours, addr, lng, lat, merchant_pic, 
+    merch_sts, creator, created_date, modified_date, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.example.entity.MerchantInfoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from merchant_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.entity.MerchantInfoKey">
+    delete from merchant_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.entity.MerchantInfo">
+    insert into merchant_info (id, merchant_id, merchant_name, 
+      country, category, sub_category, 
+      city, district, street, 
+      biz_area_id, biz_area_name, merchant_tel, 
+      biz_hours, addr, lng, 
+      lat, merchant_pic, merch_sts, 
+      creator, created_date, modified_date, 
+      remark)
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=VARCHAR}, #{merchantName,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{subCategory,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{street,jdbcType=VARCHAR}, 
+      #{bizAreaId,jdbcType=VARCHAR}, #{bizAreaName,jdbcType=VARCHAR}, #{merchantTel,jdbcType=VARCHAR}, 
+      #{bizHours,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, 
+      #{lat,jdbcType=VARCHAR}, #{merchantPic,jdbcType=VARCHAR}, #{merchSts,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createdDate,jdbcType=TIMESTAMP}, #{modifiedDate,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.entity.MerchantInfo">
+    insert into merchant_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="merchantName != null">
+        merchant_name,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="subCategory != null">
+        sub_category,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="street != null">
+        street,
+      </if>
+      <if test="bizAreaId != null">
+        biz_area_id,
+      </if>
+      <if test="bizAreaName != null">
+        biz_area_name,
+      </if>
+      <if test="merchantTel != null">
+        merchant_tel,
+      </if>
+      <if test="bizHours != null">
+        biz_hours,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="merchantPic != null">
+        merchant_pic,
+      </if>
+      <if test="merchSts != null">
+        merch_sts,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="modifiedDate != null">
+        modified_date,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null">
+        #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="subCategory != null">
+        #{subCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null">
+        #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="bizAreaId != null">
+        #{bizAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizAreaName != null">
+        #{bizAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantTel != null">
+        #{merchantTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bizHours != null">
+        #{bizHours,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPic != null">
+        #{merchantPic,jdbcType=VARCHAR},
+      </if>
+      <if test="merchSts != null">
+        #{merchSts,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null">
+        #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.entity.MerchantInfo">
+    update merchant_info
+    <set>
+      <if test="merchantId != null">
+        merchant_id = #{merchantId,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantName != null">
+        merchant_name = #{merchantName,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="subCategory != null">
+        sub_category = #{subCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="street != null">
+        street = #{street,jdbcType=VARCHAR},
+      </if>
+      <if test="bizAreaId != null">
+        biz_area_id = #{bizAreaId,jdbcType=VARCHAR},
+      </if>
+      <if test="bizAreaName != null">
+        biz_area_name = #{bizAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantTel != null">
+        merchant_tel = #{merchantTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bizHours != null">
+        biz_hours = #{bizHours,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantPic != null">
+        merchant_pic = #{merchantPic,jdbcType=VARCHAR},
+      </if>
+      <if test="merchSts != null">
+        merch_sts = #{merchSts,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedDate != null">
+        modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.entity.MerchantInfo">
+    update merchant_info
+    set merchant_id = #{merchantId,jdbcType=VARCHAR},
+      merchant_name = #{merchantName,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      category = #{category,jdbcType=VARCHAR},
+      sub_category = #{subCategory,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      street = #{street,jdbcType=VARCHAR},
+      biz_area_id = #{bizAreaId,jdbcType=VARCHAR},
+      biz_area_name = #{bizAreaName,jdbcType=VARCHAR},
+      merchant_tel = #{merchantTel,jdbcType=VARCHAR},
+      biz_hours = #{bizHours,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR},
+      merchant_pic = #{merchantPic,jdbcType=VARCHAR},
+      merch_sts = #{merchSts,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      modified_date = #{modifiedDate,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
