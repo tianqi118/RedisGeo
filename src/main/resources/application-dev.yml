@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+### mysql datasource config
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://10.13.138.25:3306/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://10.13.138.25:3306/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: 123456
+
+    ### hikari datasource config
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1765000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+# mybatis start
+
+# 注意：一定要对应mapper映射xml文件的所在路径
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  mybatis:
+    type-aliases-package: com.example.entity
+# mybatis end
+
+# log config
+logging:
+  config:
+    classpath: logback.xml
+  level:
+    com:
+      example:
+        mapper: debug

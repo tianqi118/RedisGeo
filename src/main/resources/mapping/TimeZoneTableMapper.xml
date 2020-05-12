@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TimeZoneTableMapper">
+    <resultMap id="BaseResultMap" type="com.example.entity.TimeZoneTable">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="ts" jdbcType="TIMESTAMP" property="ts"/>
+        <result column="dt" jdbcType="TIMESTAMP" property="dt"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, ts, dt
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="com.example.entity.TimeZoneTableKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from time_zone_table
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.example.entity.TimeZoneTableKey">
+    delete from time_zone_table
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.example.entity.TimeZoneTable">
+    insert into time_zone_table (id, ts, dt
+      )
+    values (#{id,jdbcType=INTEGER}, #{ts,jdbcType=TIMESTAMP}, #{dt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.example.entity.TimeZoneTable">
+        insert into time_zone_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="ts != null">
+                ts,
+            </if>
+            <if test="dt != null">
+                dt,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="ts != null">
+                #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dt != null">
+                #{dt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.entity.TimeZoneTable">
+        update time_zone_table
+        <set>
+            <if test="ts != null">
+                ts = #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dt != null">
+                dt = #{dt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.entity.TimeZoneTable">
+    update time_zone_table
+    set ts = #{ts,jdbcType=TIMESTAMP},
+      dt = #{dt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from time_zone_table
+    </select>
+
+    <select id="getListByDate" parameterType="com.example.dto.TimezoneDto" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from time_zone_table
+        where 1 = 1
+        <if test="id != null">
+            and id = #{id}
+        </if>
+        <if test="tsStartDate != null ">
+            and ts &gt;= #{tsStartDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="tsEndDate != null ">
+            AND ts &lt;= #{tsEndDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="dtStartDate != null">
+            and dt &gt;= #{dtStartDate,jdbcType=TIMESTAMP}
+        </if>
+        <if test="dtEndDate != null">
+            AND dt &lt;= #{dtEndDate,jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+
+</mapper>
