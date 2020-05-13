@@ -28,4 +28,6 @@ public interface MerchantInfoMapper {
     List<MerchantInfo> selectMerchantList();
 
     List<MerchantInfo> selectByMerchantIds(@Param ("merchantIds") List<String> merchantIds);
+
+    List<MerchantInfo> selectByCategory(@Param("category") String category);
 }

@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -119,4 +120,13 @@ public class MerchantInfo extends MerchantInfoKey {
      * 备注
      */
     private String remark;
+
+
+    /**
+     * 距离  需要计算(VO展示层)
+     */
+    private String distance;
+
+    //距离(默认值)
+    private double dis = 999999999;
 }
