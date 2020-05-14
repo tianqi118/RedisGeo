@@ -299,11 +299,10 @@
     </select>
 
     <!--商家信息查询-->
-    <select id="selectByMerchantIds" resultType="com.example.entity.MerchantInfo">
+    <select id="selectByMerchantIds" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from merchant_info
-
         where merchant_id in
         <foreach collection="merchantIds" item="id" index="index"
                  open="(" close=")" separator=",">
@@ -313,15 +312,28 @@
     </select>
 
     <!--商家信息分类查询-->
-    <select id="selectByCategory" resultType="com.example.entity.MerchantInfo">
+    <select id="selectByCategory" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from merchant_info
         where 1=1
         <if test="category != null">
-            category = #{category,jdbcType=VARCHAR},
+            and category = #{category,jdbcType=VARCHAR}
         </if>
 
     </select>
+
+    <!--商家信息分类查询+时间排序-->
+    <select id="selectByCategoryOrderByTime" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from merchant_info
+        where 1=1
+        <if test="category != null">
+            and category = #{category,jdbcType=VARCHAR}
+        </if>
+        order by created_date desc
+    </select>
+
 
 </mapper>

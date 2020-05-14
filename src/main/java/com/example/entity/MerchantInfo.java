@@ -121,7 +121,6 @@ public class MerchantInfo extends MerchantInfoKey {
      */
     private String remark;
 
-
     /**
      * 距离  需要计算(VO展示层)
      */

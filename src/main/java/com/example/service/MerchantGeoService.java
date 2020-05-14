@@ -1,7 +1,6 @@
 package com.example.service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.example.Constants;
 import com.example.entity.MerchantInfo;
 import com.example.mapper.MerchantInfoMapper;
@@ -68,17 +67,14 @@ public class MerchantGeoService {
     /**
      * 只根据距离排序
      *
+     * @param nearBy
+     * @param lng
+     * @param lat
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    public MerchantListVO orderByDistance() {
-        //距离
-        String nearBy = "50000";
-        //经度
-        String lng = "103.8154017";
-        //纬度
-        String lat = "1.3150217";
-        int pageNum = 1;
-        int pageSize = 5;
+    public MerchantListVO orderByDistance(String nearBy, String lng, String lat, int pageNum, int pageSize) {
         MerchantListVO merchantVo = new MerchantListVO();
         Map<String, Double> mapDistance = new HashMap<>();
 
@@ -138,6 +134,23 @@ public class MerchantGeoService {
             merchantInfos = merchantInfoMapper.selectByMerchantIds(ids);
             log.info("merchInfos:{}", JSON.toJSONString(merchantInfos));
         }
+
+        for (MerchantInfo merchantBase : merchantInfos) {
+            String merchantId = merchantBase.getMerchantId();
+            //处理距离
+            if (StringUtils.isNotEmpty(mapDistance)) {
+                Double distance = mapDistance.get(merchantId);
+                String dist = packageDistance(distance);
+                merchantBase.setDistance(dist);
+                merchantBase.setDis(distance);
+            }
+        }
+
+        if (StringUtils.isNotEmpty(mapDistance)) {
+            Comparator<MerchantInfo> order = Comparator.comparing(MerchantInfo::getDis);
+            Collections.sort(merchantInfos, order);
+        }
+
         merchantVo.setList(merchantInfos);
         log.info("1.1.商家列表默认距离排序查询完毕");
         return merchantVo;
@@ -146,16 +159,18 @@ public class MerchantGeoService {
     /**
      * 按照分类查询（此处仅为demo，业务级查询根据场景做sql封装）
      *
+     * @param nearBy
+     * @param lng
+     * @param lat
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    public MerchantListVO orderByCatogaroyAndDistance() {
+    public MerchantListVO orderByCatogaroyAndDistance(String nearBy, String lng, String lat, int pageNum, int pageSize) {
         MerchantListVO merchantVo = new MerchantListVO();
-        String nearBy = "50000";
-        String lng = "103.8154017";
-        String lat = "1.3150217";
+        //用类别做demo演示/先分类在按照距离排序
         String category = "SFOOD";
-        int pageNum = 1;
-        int pageSize = 5;
+
         //二：有分类筛选，还得按距离排序
         log.info("2.商家列表有分类筛选，还得按距离排序");
         List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByCategory(category);
@@ -307,24 +322,31 @@ public class MerchantGeoService {
     /**
      * 距离仅作为标签，不做距离排序
      *
+     * @param userId
+     * @param nearBy
+     * @param lng
+     * @param lat
+     * @param pageNum
+     * @param pageSize
      * @return
      */
-    public MerchantListVO orderOnlyTag() {
+    public MerchantListVO orderOnlyTag(String userId, String nearBy, String lng, String lat, int pageNum, int pageSize) {
         MerchantFilterParameter merchantFilterParameter = new MerchantFilterParameter();
+        merchantFilterParameter.setUserId(userId);
+        merchantFilterParameter.setLng(lng);
+        merchantFilterParameter.setLat(lat);
+        merchantFilterParameter.setNearBy(nearBy);
         MerchantListVO merchantVo = new MerchantListVO();
-        String nearBy = "50000";
-        String lng = "103.8154017";
-        String lat = "1.3150217";
+
+        //用类别做demo演示/按照创建时间排序后，做距离标签
         String category = "SFOOD";
-        int pageNum = 1;
-        int pageSize = 5;
 
         if ("all".equals(nearBy)) {
-            log.info("3.商家列表有定位按平均价格排序,距离为all计算距离");
+            log.info("3.DB中获取指定条件数据");
             // 设置分页
             PageHelper.startPage(pageNum, pageSize);
-            List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByCategory(category);
-            log.info("3.1.按平均价格排序查询完毕");
+            List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByCategoryOrderByTime(category);
+            log.info("3.1.数据获取完毕");
             //处理距离
             log.info("开始逐个计算距离");
             distanceHandle(merchantFilterParameter, merchantInfos);
@@ -332,12 +354,13 @@ public class MerchantGeoService {
             //分页
             PageInfo<MerchantInfo> pageInfo = new PageInfo<>();
             BeanUtils.copyProperties(pageInfo, merchantVo);
-            return null;//TODO
+            merchantVo.setList(merchantInfos);
+            return merchantVo;
         }
         if (!"all".equals(nearBy)) {
-            log.info("4.商家列表有定位按平均价格排序,距离为！=all计算距离");
-            List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByCategory(category);
-            log.info("4.1.按平均价格排序查询完毕");
+            log.info("4.DB中获取指定条件数据");
+            List<MerchantInfo> merchantInfos = merchantInfoMapper.selectByCategoryOrderByTime(category);
+            log.info("4.1.查询完毕");
 
             GeoResults<RedisGeoCommands.GeoLocation<Object>> geoResults;
             List<GeoResult<RedisGeoCommands.GeoLocation<Object>>> contents;
@@ -405,7 +428,7 @@ public class MerchantGeoService {
             merchantVo.setList(merchantList);
             return merchantVo;
         }
-        return null;//TODO
+        return null;
     }
 
 
@@ -462,4 +485,6 @@ public class MerchantGeoService {
             }
         }
     }
+
+
 }

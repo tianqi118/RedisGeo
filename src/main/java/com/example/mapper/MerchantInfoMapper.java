@@ -30,4 +30,6 @@ public interface MerchantInfoMapper {
     List<MerchantInfo> selectByMerchantIds(@Param ("merchantIds") List<String> merchantIds);
 
     List<MerchantInfo> selectByCategory(@Param("category") String category);
+
+    List<MerchantInfo> selectByCategoryOrderByTime(@Param("category") String category);
 }
